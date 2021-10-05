@@ -1,0 +1,42 @@
+# TARGET = tsf('/Volumes/Transcend/REAPER Media/Tidal impros/Track_1/Track_1_markers4_6.wav',
+# thresh=-26, offsetRise=1.5)
+
+# TARGET = tsf('/Volumes/Transcend/REAPER Media/Tidal impros/Track_1/Track_1_markers7-9.wav',
+# thresh=-30, offsetRise=1.5)
+
+# TARGET = tsf('/Volumes/Transcend/REAPER Media/Tidal impros/Track_1/Track_1_markers24-11.wav',
+# thresh=-30, offsetRise=1.5)
+
+TARGET = tsf('/Volumes/Transcend/REAPER Media/Tidal impros/Track_1/Track_1_markers14-5.wav',
+thresh=-30, offsetRise=1.5)
+
+
+CORPUS = [csf('/Volumes/Transcend/Transcent/sfdb/Corpus/Segment/crits-segment', wholeFile=False),
+csf('/Volumes/Transcend/Transcent/sfdb/Corpus/Segment/ticking-segment', wholeFile=False)]
+# csf('/Volumes/Transcend/Transcent/sfdb/Corpus/Granulate/infants-granulate', limit=['power-seg > 50%', 'centroid-seg > 1000'])
+
+
+# csf('/Volumes/Transcend/Transcent/sfdb/Corpus/Segment/infants-segment', wholeFile=False,
+# limit=['power-seg > 5%', 'centroid-seg > 200'], transMethod='f0'),
+
+# ROTATE_VOICES = True
+
+# CORPUS_GLOBAL_ATTRIBUTES = {'scaleDb': -2}
+
+SEARCH = [
+spass('closest_percent', d('power-seg'), percent=30),
+spass('closest', d('effDur-seg', norm=1)) # duration
+# spass('closest', d('centroid', norm=1)) # spectral centroid
+]
+
+SUPERIMPOSE = si(maxOverlap=1, searchOrder='power', calcMethod='subtract')
+
+# let's also create a reaper output rpp file
+RPP_FILEPATH = '/Volumes/Transcend/audioguide-1.72/Project/Output/output4.rpp'
+RPP_INCLUDE_TARGET = True # this will include the target sound in the RPP file
+RPP_CPSTRACK_METHOD = 'cpsidx' # how cps tracks are written to the RPP file, also try 'minimum'/ cpsidx
+RPP_AUTOLAUNCH = True
+
+CSOUND_PLAY_RENDERED_FILE = False
+CSOUND_RENDER_FILEPATH = '/Volumes/Transcend/audioguide-1.72/Project/Output/output4.aiff'
+CSOUND_CHANNEL_RENDER_METHOD = "targetoutputmix" # corpusmax | stereo | targetoutputmix | oneChannelPerVoice | oneChannelPerOverla
